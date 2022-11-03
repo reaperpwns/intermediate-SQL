@@ -1,36 +1,49 @@
-PRAGMA foreign_keys=on; -- Turns foreign key support in SQLite3 on
+PRAGMA foreign_keys = on;
+
+-- Turns foreign key support in SQLite3 on
 -- Your code here
-DROP TABLE IF EXISTS cat_owners;
-DROP TABLE IF EXISTS toys;
-DROP TABLE IF EXISTS owners;
-DROP TABLE IF EXISTS cats;
+DROP TABLE
+  IF EXISTS cat_owners;
 
-CREATE TABLE cats (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  name varchar(100),
-  birth_year INTEGER
-);
+DROP TABLE
+  IF EXISTS toys;
 
-CREATE TABLE owners(
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  first_name varchar(100),
-  last_name varchar(100)
-);
+DROP TABLE
+  IF EXISTS owners;
 
-CREATE TABLE toys (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  name VARCHAR,
-  cat_id INTEGER REFERENCES cats(id)
-);
+DROP TABLE
+  IF EXISTS cats;
 
-CREATE TABLE cat_owners (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  cat_id INTEGER REFERENCES cats(id),
-  owner_id INTEGER REFERENCES owners(id)
-);
+CREATE TABLE
+  cats (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    cats_name varchar(100),
+    birth_year INTEGER
+  );
 
-INSERT INTO owners
-  (first_name, last_name)
+CREATE TABLE
+  owners (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name varchar(100),
+    last_name varchar(100)
+  );
+
+CREATE TABLE
+  toys (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    toys_name VARCHAR,
+    cat_id INTEGER REFERENCES cats (id)
+  );
+
+CREATE TABLE
+  cat_owners (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    cat_id INTEGER REFERENCES cats (id),
+    owner_id INTEGER REFERENCES owners (id)
+  );
+
+INSERT INTO
+  owners (first_name, last_name)
 VALUES
   ('Nathan', 'Shanahan'),
   ('Joycelyn', 'Cummerata'),
@@ -40,8 +53,8 @@ VALUES
   ('Jonathan', 'Arbuckle'),
   ('Hermione', 'Granger');
 
-INSERT INTO cats
-  (name, birth_year)
+INSERT INTO
+  cats (cats_name, birth_year)
 VALUES
   ('Smudge', 2014),
   ('Molly', 2015),
@@ -52,8 +65,8 @@ VALUES
   ('Garfield', 2009),
   ('Crookshanks', 2017);
 
-INSERT INTO cat_owners
-  (cat_id, owner_id)
+INSERT INTO
+  cat_owners (cat_id, owner_id)
 VALUES
   (1, 1),
   (1, 2),
@@ -65,8 +78,8 @@ VALUES
   (7, 6),
   (8, 7);
 
-INSERT INTO toys
-  (cat_id, name)
+INSERT INTO
+  toys (cat_id, toys_name)
 VALUES
   (1, 'Catnip Mouse'),
   (2, 'Feather Wand'),
@@ -79,10 +92,25 @@ VALUES
   (8, 'Crinkle Ball'),
   (8, 'Yarn');
 
-SELECT owners.first_name, cats.name
-FROM owners
-JOIN cat_owners
-ON (cat_owners.owners_id = owners.id)
-JOIN cats
-ON (cat_owners.cat_id = cats.id)
-WHERE owners.first_name = 'Hermione';
+SELECT
+  owners.first_name,
+  cats.cats_name
+FROM
+  owners
+  JOIN cat_owners ON (cat_owners.owner_id = owners.id)
+  JOIN cats ON (cat_owners.cat_id = cats.id)
+WHERE
+  owners.first_name = 'Hermione';
+
+SELECT
+  cats.cats_name,
+  owners.first_name,
+  toys.toys_name
+FROM
+  owners
+  JOIN cat_owners ON (cat_owners.owner_id = owners.id)
+  JOIN cats ON (cat_owners.cat_id = cats.id)
+  JOIN toys ON (toys.cat_id = cats.id)
+WHERE
+  owners.first_name = 'Hermione';
+  
