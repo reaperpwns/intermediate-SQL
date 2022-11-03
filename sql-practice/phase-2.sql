@@ -114,4 +114,53 @@ FROM
 WHERE
   owners.first_name = 'Hermione';
 
- DELETE FROM cats WHERE cats.name = 'Smudge';
+DELETE FROM
+  cats
+WHERE
+  cats.cats_name = 'Smudge';
+
+SELECT
+  *
+FROM
+  owners
+WHERE
+  last_name LIKE '%R%'
+LIMIT
+  1;
+
+SELECT
+  cats_name,
+  birth_year
+FROM
+  cats
+ORDER BY
+  birth_year DESC;
+
+SELECT
+  owners.first_name,
+  cats.cats_name
+FROM
+  owners
+  JOIN cat_owners ON (cat_owners.owner_id = owners.id)
+  JOIN cats ON (cat_owners.cat_id = cats.id)
+WHERE
+  owners.first_name LIKE 'H%';
+
+
+SELECT 
+owners.first_name, owners.last_name, cats.birth_year 
+FROM
+  owners
+  JOIN cat_owners ON (cat_owners.owner_id = owners.id)
+  JOIN cats ON (cat_owners.cat_id = cats.id)
+WHERE
+  cats.birth_year > 2015;
+
+
+SELECT cats.cats_name, owners.first_name, owners.last_name
+FROM
+  owners
+  JOIN cat_owners ON (cat_owners.owner_id = owners.id)
+  JOIN cats ON (cat_owners.cat_id = cats.id)
+WHERE
+owners.first_name = 'George' OR owners.first_name = 'Melynda';
