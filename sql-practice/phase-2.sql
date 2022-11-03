@@ -32,14 +32,14 @@ CREATE TABLE
   toys (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     toys_name VARCHAR,
-    cat_id INTEGER REFERENCES cats (id)
+    cat_id INTEGER REFERENCES cats (id) ON DELETE CASCADE
   );
 
 CREATE TABLE
   cat_owners (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    cat_id INTEGER REFERENCES cats (id),
-    owner_id INTEGER REFERENCES owners (id)
+    cat_id INTEGER REFERENCES cats (id) ON DELETE CASCADE,
+    owner_id INTEGER REFERENCES owners (id) ON DELETE CASCADE
   );
 
 INSERT INTO
@@ -113,4 +113,5 @@ FROM
   JOIN toys ON (toys.cat_id = cats.id)
 WHERE
   owners.first_name = 'Hermione';
-  
+
+ DELETE FROM cats WHERE cats.name = 'Smudge';
