@@ -147,8 +147,8 @@ WHERE
   owners.first_name LIKE 'H%';
 
 
-SELECT 
-owners.first_name, owners.last_name, cats.birth_year 
+SELECT
+owners.first_name, owners.last_name, cats.birth_year
 FROM
   owners
   JOIN cat_owners ON (cat_owners.owner_id = owners.id)
@@ -164,3 +164,5 @@ FROM
   JOIN cats ON (cat_owners.cat_id = cats.id)
 WHERE
 owners.first_name = 'George' OR owners.first_name = 'Melynda';
+
+UPDATE toys SET toys_name = 'Pooky' WHERE toys_name = 'Cheetos';
